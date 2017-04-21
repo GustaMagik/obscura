@@ -52,14 +52,25 @@ class Model {
 	void impact(Ball a, Ball b){
 		double x = b.x-a.x;
 		double y = b.y-a.y;
-		double deg = Math.atan(y/x);
-				
-		double ahyp = a.vx*Math.cos(deg)-a.vy*Math.sin(deg);
-		double ananhyp = a.vx*Math.sin(deg)+a.vy*Math.cos(deg);
+		double deg = Math.atan2(y,x);
 		
-		double bhyp = b.vx*Math.cos(deg)-b.vy*Math.sin(deg);
-		double bnanhyp = b.vx*Math.sin(deg)+b.vy*Math.cos(deg);
+		double aV = Math.sqrt(a.vx*a.vx+a.vy*a.vy);
+		double ad = Math.atan2(a.vy,a.vx);
+
+		double bV = Math.sqrt(b.vx*b.vx+b.vy*b.vy);
+		double bd = Math.atan2(b.vy,b.vx);
+
+
+		//double ahyp = a.vx*Math.cos(deg)-a.vy*Math.sin(deg);
+		//double ananhyp = a.vx*Math.sin(deg)+a.vy*Math.cos(deg);
 		
+		//double bhyp = b.vx*Math.cos(deg)-b.vy*Math.sin(deg);
+		//double bnanhyp = b.vx*Math.sin(deg)+b.vy*Math.cos(deg);
+		double ahyp = aV*Math.cos(ad-deg);
+		double ananhyp = aV*Math.sin(ad-deg);
+		double bhyp = bV*Math.cos(bd-deg);
+		double bnanhyp = bV*Math.sin(bd-deg);
+
 		double tmp;
 		double am = a.radius*a.radius;
 		double bm = b.radius*b.radius;
@@ -69,13 +80,13 @@ class Model {
 		ahyp = tmp;
 
 		double avec = Math.sqrt(ahyp*ahyp+ananhyp*ananhyp);
-		double adeg = Math.atan(ananhyp/ahyp);
+		double adeg = Math.atan2(ananhyp,ahyp);
 		double bvec = Math.sqrt(bhyp*bhyp+bnanhyp*bnanhyp);
-		double bdeg = Math.atan(bnanhyp/bhyp);
-		a.vx= avec*Math.cos(adeg);
-		a.vy= avec*Math.sin(adeg);
-		b.vx= bvec*Math.cos(bdeg);
-		b.vy= bvec*Math.sin(bdeg);
+		double bdeg = Math.atan2(bnanhyp,bhyp);
+		a.vx= avec*Math.cos(adeg+deg);
+		a.vy= avec*Math.sin(adeg+deg);
+		b.vx= bvec*Math.cos(bdeg+deg);
+		b.vy= bvec*Math.sin(bdeg+deg);
 	}
 
 
